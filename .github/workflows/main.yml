@@ -16,8 +16,8 @@ jobs:
         name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.INPUT_DOCKERHUB_USERNAME }}
-          password: ${{ secrets.INPUT_DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -28,7 +28,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.INPUT_DOCKERHUB_USERNAME }}/topdocapi:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/topdocapi:latest
         
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
@@ -41,13 +41,13 @@ jobs:
               docker container stop topdocapi
               docker container rm topdocapi
               docker rmi ${{ secrets.DOCKERHUB_USERNAME}}/topdocapi:latest
-              echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.INPUT_DOCKERHUB_USERNAME }} --password-stdin
+              echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
               docker run -e 'NAME_DATABASE=${{ secrets.NAME_DATABASE }}' \
-                                                          'HOST_DATABASE=${{ secrets.INPUT_HOST_DATABASE}}' \
-                                                          'PASS_DATABASE=${{ secrets.INPUT_PASS_DATABASE}}' \
-                                                          'HOST_DATA=${{ secrets.INPUT_HOST_DATA}}' \
-                                                          'PORT=${{ secrets.INPUT_PORT}}' \
-              -p 5005:5005 --name="topdocapi" ${{ secrets.INPUT_DOCKERHUB_USERNAME}}/topdocapi:latest
+                                                          'HOST_DATABASE=${{ secrets.HOST_DATABASE}}' \
+                                                          'PASS_DATABASE=${{ secrets.PASS_DATABASE}}' \
+                                                          'HOST_DATA=${{ secrets.HOST_DATA}}' \
+                                                          'PORT=${{ secrets.PORT}}' \
+              -p 5005:5005 --name="topdocapi" ${{ secrets.DOCKERHUB_USERNAME}}/topdocapi:latest
 
 
         
