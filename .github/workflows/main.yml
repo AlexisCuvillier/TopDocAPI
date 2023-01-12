@@ -37,9 +37,9 @@ jobs:
                       docker rm topdoc
                       docker rmi ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
                       echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin \
-                      docker run -dp --name="topdoc" 5005:5005 -e 'NAME_DATABASE=${{ secrets.NAME_DATABASE }}' \
-                      'HOST_DATABASE=${{ secrets.HOST_DATABASE}}' \
-                      'PASS_DATABASE=${{ secrets.PASS_DATABASE}}' \
-                      'HOST_DATA=${{ secrets.HOST_DATA}}' \
-                      'PORT=${{ secrets.PORT}}' \
+                      docker run -dp --name="topdoc" 5005:5005 -e 'id=${{ secrets.NAME_DATABASE }}' \
+                      -e 'id=${{ secrets.HOST_DATABASE}}' \
+                      -e 'id=${{ secrets.PASS_DATABASE}}' \
+                      -e 'id=${{ secrets.HOST_DATA}}' \
+                      -e 'id=${{ secrets.PORT}}' \
                       ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
