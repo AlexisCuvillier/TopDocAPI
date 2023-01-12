@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        name: Chekcout
+        name: Checkcout
         uses: actions/chekckout@v3
       -
         name: Login to Docker Hub
@@ -28,7 +28,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/topdocapi
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/topdocapi:latest
         
       - name: topDoc
         run : echo 'Hello topDoc'
