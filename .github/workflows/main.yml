@@ -30,8 +30,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/topdocapi:latest
         
-      - name: topdocapi
-        run : echo 'Hello topDoc'
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
         with:
