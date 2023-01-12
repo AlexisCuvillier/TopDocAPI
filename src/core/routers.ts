@@ -6,7 +6,8 @@ import { addressRouter } from "../address/controller/address.router";
 
 export const router = Router()
 
-router.use('/docs', swaggerRouter);
+router.use('/docs1', swaggerRouter);
 router.use('/topDocUser', topDocUserRouter)
 router.use('/availability', availabilityRouter)
 router.use('/address', addressRouter)
+
