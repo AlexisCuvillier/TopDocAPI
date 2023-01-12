@@ -25,7 +25,6 @@ jobs:
                   file: ./Dockerfile
                   push: true
                   tags: ${{ secrets.DOCKERHUB_USERNAME }}/topdoc:latest
-
             - name: Deploy using ssh
               uses: appleboy/ssh-action@master
               with:
@@ -38,4 +37,9 @@ jobs:
                       docker rm topdoc
                       docker rmi ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
                       echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin \
-                      docker run -p 5005:5005 --name="topdoc" -e 'NAME_DATABASE=${{ secrets.NAME_DATABASE }}' ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
+                      docker run -dp --name="topdoc" 5005:5005 -e 'NAME_DATABASE=${{ secrets.NAME_DATABASE }}' \
+                      'HOST_DATABASE=${{ secrets.HOST_DATABASE}}' \
+                      'PASS_DATABASE=${{ secrets.PASS_DATABASE}}' \
+                      'HOST_DATA=${{ secrets.HOST_DATA}}' \
+                      'PORT=${{ secrets.PORT}}' \
+                      ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
