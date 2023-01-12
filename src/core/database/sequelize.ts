@@ -5,8 +5,8 @@ dotenv.config()
 
 const sequelize = new Sequelize(
 
-    `$TopDoc`,
-    `$alexis`,
+    `TopDoc`,
+    `alexis`,
     `123456`,
     {
         host: `b836212.online-server.cloud`,
