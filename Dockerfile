@@ -19,7 +19,11 @@ RUN npm install
 RUN npm run build
 
 #
-RUN --mount=type=secret,PORT=PORT NAME_DATABASE=NAME_DATABASE HOST_DATABASE=HOST_DATABASE PASS_DATABASE=PASS_DATABASE HOST_DATA=HOST_DATA,dst=/.env
+RUN --mount=type=secret,id=PORT,dst=/.env
+RUN --mount=type=secret,id=NAME_DATABASE,dst=/.env
+RUN --mount=type=secret,id=HOST_DATABASE,dst=/.env
+RUN --mount=type=secret,id=PASS_DATABASE,dst=/.env
+RUN --mount=type=secret,id=HOST_DATA,dst=/.env
 
 #
 EXPOSE 5005
