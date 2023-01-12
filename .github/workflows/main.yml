@@ -40,7 +40,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
-              cd ~/projets/demo1/gaet/hello-action
+              cd ~/DevCda/TopDocAPI
               pwd
               git pull origin master
               git status
