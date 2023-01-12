@@ -37,5 +37,5 @@ jobs:
                       docker rm topdoc
                       docker rmi ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
                       echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin \
-                      docker run -dp --name="topdoc" 5005:5005 \
+                      docker run -dp 5005:5005 --name="topdoc"  \
                       ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
