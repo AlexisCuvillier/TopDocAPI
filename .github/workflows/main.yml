@@ -1,53 +1,46 @@
-name: ci 
+name: ci
 
 on:
-  push:
-    branches:
-      - "main"
+    push:
+        branches:
+            - "main"
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v3
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      -
-        name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/topdoc:latest
-        
-      - name: Deploy using ssh
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER_NAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: 22
-          script: |
-              docker stop topdoc
-              docker rm topdoc
-              docker rmi ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
-              echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-              docker run -dp 5005:5005 -e 'NAME_DATABASE=${{ secrets.NAME_DATABASE }}' \
-                                                          'HOST_DATABASE=${{ secrets.HOST_DATABASE}}' \
-                                                          'PASS_DATABASE=${{ secrets.PASS_DATABASE}}' \
-                                                          'HOST_DATA=${{ secrets.HOST_DATA}}' \
-                                                          'PORT=${{ secrets.PORT}}' \
-                                                          ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Login to Docker Hub
+              uses: docker/login-action@v2
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v2
+            - name: Build and push
+              uses: docker/build-push-action@v3
+              with:
+                  context: .
+                  file: ./Dockerfile
+                  push: true
+                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/topdoc:latest
 
-
-        
+            - name: Deploy using ssh
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USER_NAME }}
+                  key: ${{ secrets.PRIVATE_KEY }}
+                  port: 22
+                  script: |
+                      docker stop topdoc
+                      docker rm topdoc
+                      docker rmi ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
+                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin \
+                      docker run -dp 5005:5005 -e 'NAME_DATABASE=${{ secrets.NAME_DATABASE }}' \
+                                                                  'HOST_DATABASE=${{ secrets.HOST_DATABASE}}' \
+                                                                  'PASS_DATABASE=${{ secrets.PASS_DATABASE}}' \
+                                                                  'HOST_DATA=${{ secrets.HOST_DATA}}' \
+                                                                  'PORT=${{ secrets.PORT}}' \
+                                                                  ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
