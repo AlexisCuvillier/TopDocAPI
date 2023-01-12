@@ -40,7 +40,7 @@ jobs:
           script: |
               docker stop topdoc
               docker rm topdoc
-              docker rmi ${{ secrets.DOCKERHUB_USERNAME}}/topdocapi:latest
+              docker rmi ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
               echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
               docker run -dp 5005:5005 -e 'NAME_DATABASE=${{ secrets.NAME_DATABASE }}' \
                                                           'HOST_DATABASE=${{ secrets.HOST_DATABASE}}' \
