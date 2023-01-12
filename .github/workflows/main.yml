@@ -47,7 +47,7 @@ jobs:
                                                           'PASS_DATABASE=${{ secrets.PASS_DATABASE}}' \
                                                           'HOST_DATA=${{ secrets.HOST_DATA}}' \
                                                           'PORT=${{ secrets.PORT}}' \
-              -p 3000:3000 --name="topdocapi" ${{ secrets.DOCKERHUB_USERNAME}}/topdocapi:latest
+              -p 5005:5005 --name="topdocapi" ${{ secrets.DOCKERHUB_USERNAME}}/topdocapi:latest
 
 
         
