@@ -28,7 +28,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/topDoc:latest
         
       - name: topDoc
         run : echo 'Hello topDoc'
@@ -45,10 +45,15 @@ jobs:
               git pull origin master
               git status
               npm install
-              docker container stop gaetan
-              docker container rm gaetan
-              DOCKER_BUILDKIT=1 docker build -t clockbox .
-              docker run -dp 3004:3004 --name="gaetan" -e 'id=${{ secrets.MOT }}'  clockbox
+              docker container stop topDoc
+              docker container rm topDoc
+              DOCKER_BUILDKIT=1 docker build -t topDoc .
+              docker run -dp 3000:3000 --name="topDoc" -e 'NAME_DATABASE=${{ secrets.NAME_DATABASE }}' \
+                                                          'HOST_DATABASE=${{ secrets.HOST_DATABASE}}' \
+                                                          'PASS_DATABASE=${{ secrets.PASS_DATABASE}}' \
+                                                          'HOST_DATA=${{ secrets.HOST_DATA}}' \
+                                                          'PORT=${{ secrets.PORT}}'
+                                                          topDoc
 
 
         
