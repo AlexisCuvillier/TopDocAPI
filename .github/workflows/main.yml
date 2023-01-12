@@ -40,11 +40,6 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
-              cd ~/DevCda/TopDocAPI
-              pwd
-              git pull origin main
-              git status
-              npm install
               docker container stop topdocapi
               docker container rm topdocapi
               DOCKER_BUILDKIT=1 docker build -t topdocapi .
