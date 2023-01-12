@@ -5,11 +5,11 @@ dotenv.config()
 
 const sequelize = new Sequelize(
 
-    `${process.env.NAME_DATABASE}`,
-    `${process.env.HOST_DATABASE}`,
-    `${process.env.PASS_DATABASE}`,
+    `$TopDoc`,
+    `$alexis`,
+    `123456`,
     {
-        host: `${process.env.HOST_DATA}`,
+        host: `b836212.online-server.cloud`,
         dialect: 'postgres',
         port: 5432 || process,
         dialectOptions: {
