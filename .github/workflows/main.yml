@@ -36,5 +36,4 @@ jobs:
                       docker stop topdoc
                       docker rm topdoc
                       docker rmi ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
-                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }}--password-stdin \
                       docker run -p 5005:5005 ${{ secrets.DOCKERHUB_USERNAME}}/topdoc:latest
