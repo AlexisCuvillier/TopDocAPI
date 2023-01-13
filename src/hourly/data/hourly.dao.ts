@@ -37,7 +37,7 @@ HourlyDAO.init(
     },
     {
         sequelize,
-        modelName: "TopDocUser",
+        modelName: "Hourly",
         timestamps: false,
         freezeTableName: true,
     }

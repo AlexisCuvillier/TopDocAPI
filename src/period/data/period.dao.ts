@@ -30,7 +30,7 @@ PeriodDAO.init(
     },
      {
         sequelize,
-        modelName: 'Availability',
+        modelName: 'Period',
         timestamps: false, 
         freezeTableName: true
      }
