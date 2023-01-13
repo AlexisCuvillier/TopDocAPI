@@ -9,6 +9,6 @@ dotenv.config()
 
 createServer().then(app => {
     sequelize.sync({force : true})
-    app.listen(5005, () => logger.info(`Lancé sur le port 5005`))
+    app.listen(process.env.PORT, () => logger.info(`Lancé sur le port ${process.env.PORT}`))
     
 })
