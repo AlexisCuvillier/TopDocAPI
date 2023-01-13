@@ -10,4 +10,4 @@ router.use('/docs1', swaggerRouter);
 router.use('/topDocUser', topDocUserRouter)
 router.use('/availability', availabilityRouter)
 router.use('/address', addressRouter)
-router.use('/hello', (req, res) => res.send('Hello Simplon by Alexis'));
+router.use('/hello', (req, res) => res.send('Hello Simplon Alexis'));
