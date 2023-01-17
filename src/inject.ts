@@ -16,6 +16,13 @@ import { HolidayRepository } from './holiday/data/holiday.repository';
 import { PeriodHandler } from './period/controller/period.handler';
 import { PeriodService } from './period/period.service';
 import { PeriodRepository } from './period/data/period.repository';
+import { RoleHandler } from './role/controller/role.handler';
+import { RoleService } from './role/role.service';
+import { RoleRepository } from './role/data/role.repository';
+import { CabinetHandler } from './cabinet/controller/cabinet.handler';
+import { CabinetService } from './cabinet/cabinet.service';
+import { CabinetRepository } from './cabinet/data/cabinet.repository';
+
 
 export const topDocUserHandler = new TopDocUserHandler(new TopDocUserService(new TopDocUserRepository()));
 export const addressHandler = new AddressHandler(new AddressService(new AddressRepository()));
@@ -23,3 +30,5 @@ export const availabilityHandler = new AvailabilityHandler(new AvailabilityServi
 export const hourlyHandler = new HourlyHandler(new HourlyService(new HourlyRepository()));
 export const holidayHandler = new HolidayHandler(new HolidayService(new HolidayRepository()));
 export const periodHandler = new PeriodHandler(new PeriodService(new PeriodRepository()));
+export const roleHandler = new RoleHandler(new RoleService(new RoleRepository()));
+export const cabinetHandler = new CabinetHandler(new CabinetService(new CabinetRepository()));
