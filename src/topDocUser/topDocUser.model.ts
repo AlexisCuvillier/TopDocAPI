@@ -3,6 +3,6 @@ export interface TopDocUser {
     name: string
     lastname: string
     mail: string
-    password: string
+    password?: string
     phone: number
 }

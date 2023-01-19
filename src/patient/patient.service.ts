@@ -1,6 +1,8 @@
 import { IServiceCreate, IService } from "../core/service.interface";
 import { PatientDTO, PatientUserDTO } from './dto/patient.dto';
 import { IPatientRepository } from './data/patient.repository';
+import bcrypt = require("bcrypt");
+
 
 export interface IPatientService extends IService<PatientDTO>, IServiceCreate<PatientUserDTO> {
 }
@@ -46,7 +48,16 @@ export class PatientService implements IPatientService{
      * @returns 
      */
     async create(patient: PatientUserDTO): Promise<PatientUserDTO> {
-        return this.patientRepository.create(patient);
+        let hashPass = await bcrypt.hash(patient.password, 10)
+        let patienInfo : PatientUserDTO = {
+            num_secu: patient.num_secu,
+            name: patient.name,
+            lastname: patient.lastname,
+            password: hashPass,
+            phone: patient.phone,
+            mail: patient.mail
+        }
+        return this.patientRepository.create(patienInfo);
     }
 
     /**

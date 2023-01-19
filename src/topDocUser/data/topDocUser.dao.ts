@@ -45,12 +45,9 @@ TopDocUserDAO.init(
             },
         },
         password: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING,
             field: "password",
             allowNull: false,
-            validate: {
-                len: [0, 50],
-            },
         },
         phone: {
             type: DataTypes.INTEGER,

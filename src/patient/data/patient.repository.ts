@@ -60,6 +60,7 @@ export class PatientRepository implements IPatientRepository {
 
         const t = await sequelize.transaction();
 
+       
         try {
             const newTopDocUser = await TopDocUserDAO.create(
                 {
@@ -88,14 +89,14 @@ export class PatientRepository implements IPatientRepository {
                 name: newTopDocUser.name,
                 lastname: newTopDocUser.lastname,
                 mail: newTopDocUser.mail,
-                password: newTopDocUser.password,
+                password:newTopDocUser.password,
                 phone: newTopDocUser.phone,
                 num_secu: newPatient.num_secu
             }
 
             await t.commit();
             return result;
-        } catch (err) {
+        } catch (err) {          
             await t.rollback()
             throw err;
         }
