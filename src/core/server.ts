@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { Server } from 'http';
 import unexpectedErrorMiddleware from '../api/middlewares/error.global';
 import { apiRouter } from './api.router';
+import { relations } from './database/relations';
 
 dotenv.config()
 
@@ -17,8 +18,11 @@ export async function createServer() : Promise<Express>{
     app.use(express.json({ limit: '50kb'}))
 
     app.use(cors())
+    
     app.use(apiRouter)
+
     app.use(unexpectedErrorMiddleware)
+    relations()
 
     return app
     

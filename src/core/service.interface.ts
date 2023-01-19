@@ -2,6 +2,7 @@ export interface IService<T> {
     findById(id: number): Promise<T | null>;
     findAll(options?: any): Promise<T[]>;
     delete(id: number): Promise<boolean>;
+    update(t: T): Promise<T>
 }
 
 export interface IServiceCreate<T> {
