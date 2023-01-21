@@ -25,11 +25,11 @@ const swaggerOptions = {
         },
         security: [
             {
-                bearerAuth: []
+                // bearerAuth: []
             }
         ],
     },
-    apis: [`./src/topDocUser/controller/topDocUser.router.ts`, `./src/address/controller/address.router.ts`]
+    apis: [`./src/period/controller/period.router.ts`]
 }
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
