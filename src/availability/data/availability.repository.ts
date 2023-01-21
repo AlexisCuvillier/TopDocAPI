@@ -1,10 +1,37 @@
 import { InputError, NotFoundError } from "../../core/errors/errors";
-import { IRepository } from "../../core/repository.interface";
+import { IRepository, IRepositoryCreate } from "../../core/repository.interface";
 import { AvailabilityDTO } from '../dto/availability.dto';
 import { AvailabilityMapper } from "../dto/availability.mapper";
 import { AvailabilityDAO } from "./availability.dao";
+import { IService, IServiceCreate } from '../../core/service.interface';
 
-export class AvailabilityRepository implements IRepository<AvailabilityDTO> {
+export interface IAvailabilityRepository extends IRepositoryCreate<AvailabilityDTO>, IRepository<AvailabilityDTO> {}
+
+export class AvailabilityRepository implements IAvailabilityRepository {
+    
+    async create(days: AvailabilityDTO): Promise<AvailabilityDTO> {
+        try {
+            const newAvailability = await AvailabilityDAO.create(
+                {
+                    days: days.days,
+                    id_days: days.id_days
+
+                }
+            );
+            const result: AvailabilityDTO = {
+                id_days: newAvailability.id_days,
+                days: newAvailability.days,
+              
+            }
+;
+            return result;
+        } catch (err) {          
+
+            throw err;
+        }
+    
+
+    }
     /**
      * 
      *  @param id

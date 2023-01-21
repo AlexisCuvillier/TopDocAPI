@@ -33,8 +33,8 @@ export class PeriodService implements IService<PeriodDTO> {
      * 
      * @param t 
      */
-    async update(topDocUser: PeriodDTO): Promise<PeriodDTO> {
-        return this.periodRepository.update(topDocUser);
+    async update(period: PeriodDTO): Promise<PeriodDTO> {
+        return this.periodRepository.update(period);
     }
 
     /**

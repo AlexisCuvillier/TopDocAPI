@@ -1,14 +1,23 @@
-import { IService } from '../core/service.interface';
+import { IService, IServiceCreate } from '../core/service.interface';
 import { IRepository } from '../core/repository.interface';
 import { AvailabilityDTO } from './dto/availability.dto';
+import { IAvailabilityRepository } from './data/availability.repository';
 
-export class AvailabilityService implements IService<AvailabilityDTO> {
+export interface IAvailabilityService extends IService<AvailabilityDTO>, IServiceCreate<AvailabilityDTO> {}
+export class AvailabilityService implements IAvailabilityService {
     
-    private availabilityRepository: IRepository<AvailabilityDTO>;
+    private availabilityRepository: IAvailabilityRepository;
 
-    constructor(_availabilityRepository: IRepository<AvailabilityDTO>) {
-        this.availabilityRepository = _availabilityRepository
+    constructor(availabilityRepository: IAvailabilityRepository) {
+        this.availabilityRepository = availabilityRepository
     }
+  
+
+    async create(availability: AvailabilityDTO): Promise<AvailabilityDTO> {
+
+        return this.availabilityRepository.create(availability);
+    }
+
 
 
     /**
@@ -18,10 +27,8 @@ export class AvailabilityService implements IService<AvailabilityDTO> {
      */
 
     findById(id: number): Promise<AvailabilityDTO> {
-       return this.availabilityRepository.findById(id).then(availabilityDto => {
-        availabilityDto.days = "%" + availabilityDto.days
-        return availabilityDto
-       })
+       return this.availabilityRepository.findById(id)
+ 
     }
 
     /**

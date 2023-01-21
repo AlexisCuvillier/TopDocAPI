@@ -9,6 +9,24 @@ export class AvailabilityHandler {
         this.availabilityService = availabilityService;
     }
 
+    /**
+     * 
+     * @param req 
+     * @param res 
+     * @returns 
+     */
+     create = async (req: Request, res: Response, next: NextFunction) => {
+
+        const availabilityDto: AvailabilityDTO = req.body;
+
+        try {
+            const result = await this.availabilityService.create(availabilityDto);
+            res.status(200).json(result);
+        } catch (err) {
+            next(err);
+        }
+
+    }
 
     /**
      * 

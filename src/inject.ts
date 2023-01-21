@@ -22,9 +22,12 @@ import { RoleRepository } from './role/data/role.repository';
 import { CabinetHandler } from './cabinet/controller/cabinet.handler';
 import { CabinetService } from './cabinet/cabinet.service';
 import { CabinetRepository } from './cabinet/data/cabinet.repository';
-import { PatientHandler } from './patient/controller/admin.handler';
+import { PatientHandler } from './patient/controller/patient.handler';
 import { PatientService } from './patient/patient.service';
 import { PatientRepository } from './patient/data/patient.repository';
+import { AdministratorHandler } from './administrator/controller/administrator.handler';
+import { AdministratorService } from './administrator/administrator.service';
+import { AdministratorRepository } from './administrator/data/administrator.repository';
 
 
 export const topDocUserHandler = new TopDocUserHandler(new TopDocUserService(new TopDocUserRepository()));
@@ -36,3 +39,4 @@ export const periodHandler = new PeriodHandler(new PeriodService(new PeriodRepos
 export const roleHandler = new RoleHandler(new RoleService(new RoleRepository()));
 export const cabinetHandler = new CabinetHandler(new CabinetService(new CabinetRepository()));
 export const patientHandler = new PatientHandler(new PatientService(new PatientRepository()));
+export const administratorHandler  = new AdministratorHandler(new AdministratorService(new AdministratorRepository()))

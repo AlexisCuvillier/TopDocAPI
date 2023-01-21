@@ -1,14 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import { IPatientService } from '../patient.service';
-import { PatientUserDTO, PatientFilterDTO, PatientDTO } from '../dto/patient.dto';
+import { IAdministratorService } from '../administrator.service';
+import { AdministratorUserDTO, AdministratorFilterDTO, AdministratorDTO } from '../dto/administrator.dto';
 
 
-export class PatientHandler {
 
-    private patientService: IPatientService;
+export class AdministratorHandler {
 
-    constructor(patientService: IPatientService) {
-        this.patientService = patientService;
+    private administratorService: IAdministratorService;
+
+    constructor(administratorService: IAdministratorService) {
+        this.administratorService = administratorService;
     }
 
     /**
@@ -19,10 +20,10 @@ export class PatientHandler {
      */
     create = async (req: Request, res: Response, next: NextFunction) => {
 
-        const adminDto: PatientUserDTO = req.body;
+        const adminDto: AdministratorUserDTO = req.body;
 
         try {
-            const result = await this.patientService.create(adminDto);
+            const result = await this.administratorService.create(adminDto);
             res.status(200).json(result);
         } catch (err) {
             next(err);
@@ -38,10 +39,10 @@ export class PatientHandler {
      */
     findAll = async (req: Request, res: Response, next: NextFunction) => {
 
-        const filters = req.query as unknown as PatientFilterDTO;
+        const filters = req.query as unknown as AdministratorFilterDTO;
 
         try {
-            const result = await this.patientService.findAll(filters)
+            const result = await this.administratorService.findAll(filters)
             res.status(200).json(result)
 
         } catch (err) {
@@ -59,7 +60,7 @@ export class PatientHandler {
 
         const id = req.params.id as unknown as number;
         try {
-            const result = await this.patientService.findById(id);
+            const result = await this.administratorService.findById(id);
             res.status(200).json(result);
         } catch (err) {
             next(err);
@@ -76,7 +77,7 @@ export class PatientHandler {
         const id = req.params.id as unknown as number;
 
         try {
-            await this.patientService.delete(id);
+            await this.administratorService.delete(id);
             res.status(200).send();
 
         } catch (err) {
@@ -91,10 +92,10 @@ export class PatientHandler {
      * @param next 
      */
     update = async(req: Request, res: Response, next: NextFunction) => {
-        const patientDto: PatientDTO = req.body;
+        const adminDto: AdministratorDTO = req.body;
 
         try {
-            const result = await this.patientService.update(patientDto);
+            const result = await this.administratorService.update(adminDto);
             res.status(200).json(result);
 
         } catch(err) {

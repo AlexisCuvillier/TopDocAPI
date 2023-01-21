@@ -19,12 +19,12 @@ HourlyDAO.init(
             primaryKey: true,
         },
         early_hours: {
-            type: DataTypes.DATE, 
+            type: DataTypes.TIME, 
             field: "early_hours",
             allowNull: false,
         },
         end_hours: {
-            type: DataTypes.DATE,
+            type: DataTypes.TIME,
             field: "end_hours",
             allowNull: false,
 

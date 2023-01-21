@@ -12,3 +12,4 @@ availabilityRouter.get('/',  validate, availabilityHandler.findAll);
 availabilityRouter.get('/:id', validate, availabilityHandler.find);
 availabilityRouter.delete('/:id', validate, availabilityHandler.delete);
 availabilityRouter.patch('/', validate,  availabilityHandler.update);
+availabilityRouter.post('/', validate, availabilityHandler.create)

@@ -34,3 +34,4 @@ hourlyRouter.get('/',  validate, hourlyHandler.findAll);
 
  hourlyRouter.delete('/:id', validate, hourlyHandler.delete);
  hourlyRouter.patch('/', validate,  hourlyHandler.update);
+ hourlyRouter.post('/', validate, hourlyHandler.create)

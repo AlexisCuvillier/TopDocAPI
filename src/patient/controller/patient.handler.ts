@@ -1,37 +1,34 @@
 import { NextFunction, Request, Response } from "express";
+import { IPatientService } from '../patient.service';
+import { PatientUserDTO, PatientFilterDTO, PatientDTO } from '../dto/patient.dto';
 
-import { HourlyService } from '../hourly.service';
-import { HourlyDTO } from '../dto/hourly.dto';
 
+export class PatientHandler {
 
-export class HourlyHandler {
+    private patientService: IPatientService;
 
-    private hourlyService: HourlyService;
-
-    constructor(topDocUserService: HourlyService) {
-        this.hourlyService = topDocUserService;
+    constructor(patientService: IPatientService) {
+        this.patientService = patientService;
     }
 
-   
-        /**
+    /**
      * 
      * @param req 
      * @param res 
      * @returns 
      */
-         create = async (req: Request, res: Response, next: NextFunction) => {
+    create = async (req: Request, res: Response, next: NextFunction) => {
 
-            const hourlyDto : HourlyDTO = req.body;
-    
-            try {
-                const result = await this.hourlyService.create(hourlyDto);
-                res.status(200).json(result);
-            } catch (err) {
-                next(err);
-            }
-    
+        const patientDto: PatientUserDTO = req.body;
+
+        try {
+            const result = await this.patientService.create(patientDto);
+            res.status(200).json(result);
+        } catch (err) {
+            next(err);
         }
-    
+
+    }
 
 
     /**
@@ -40,19 +37,17 @@ export class HourlyHandler {
      * @param res 
      */
     findAll = async (req: Request, res: Response, next: NextFunction) => {
-        const filters = req.query;
+
+        const filters = req.query as unknown as PatientFilterDTO;
 
         try {
-            const result = await this.hourlyService.findAll(filters)
+            const result = await this.patientService.findAll(filters)
             res.status(200).json(result)
 
         } catch (err) {
             next(err);
         }
     }
-
-
-
 
     /**
      * 
@@ -64,7 +59,7 @@ export class HourlyHandler {
 
         const id = req.params.id as unknown as number;
         try {
-            const result = await this.hourlyService.findById(id);
+            const result = await this.patientService.findById(id);
             res.status(200).json(result);
         } catch (err) {
             next(err);
@@ -81,7 +76,7 @@ export class HourlyHandler {
         const id = req.params.id as unknown as number;
 
         try {
-            await this.hourlyService.delete(id);
+            await this.patientService.delete(id);
             res.status(200).send();
 
         } catch (err) {
@@ -95,17 +90,15 @@ export class HourlyHandler {
      * @param res 
      * @param next 
      */
-    update = async (req: Request, res: Response, next: NextFunction) => {
-        const hourlyDto: HourlyDTO = req.body;
+    update = async(req: Request, res: Response, next: NextFunction) => {
+        const patientDto: PatientDTO = req.body;
 
         try {
-            const result = await this.hourlyService.update(hourlyDto);
+            const result = await this.patientService.update(patientDto);
             res.status(200).json(result);
 
-        } catch (err) {
+        } catch(err) {
             next(err);
         }
     }
-
-
 }

@@ -1,5 +1,5 @@
 
 export interface AvailabilityDTO {
-    id_days?: number
+    id_days: number
     days: string
 }

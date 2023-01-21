@@ -1,14 +1,23 @@
 import { IRepository } from "../core/repository.interface";
-import { IService } from "../core/service.interface";
+import { IService, IServiceCreate } from '../core/service.interface';
 import { HourlyDTO } from './dto/hourly.dto';
+import { IHourlyRepository } from './data/hourly.repository';
 
+export interface IHourlyService extends IService<HourlyDTO>, IServiceCreate<HourlyDTO> {}
 export class HourlyService implements IService<HourlyDTO> {
 
-    private hourlyRepository: IRepository<HourlyDTO>;
+    private hourlyRepository: IHourlyService;
 
-    constructor(_hourlyRepository: IRepository<HourlyDTO>) {
+    constructor(_hourlyRepository: IHourlyRepository) {
         this.hourlyRepository = _hourlyRepository;
     }
+
+    async create(hourly: HourlyDTO): Promise<HourlyDTO> {
+
+        return this.hourlyRepository.create(hourly);
+    }
+
+
 
     /**
      * 

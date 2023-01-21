@@ -1,12 +1,42 @@
 import { InputError, NotFoundError } from "../../core/errors/errors";
-import { IRepository } from "../../core/repository.interface";
+import { IRepository, IRepositoryCreate } from "../../core/repository.interface";
 import { HourlyDTO } from '../dto/hourly.dto';
 import { HourlyDAO } from './hourly.dao';
 import { HourlyMapper } from '../dto/houly.maper';
 
 
+
+export interface IHourlyRepository extends IRepositoryCreate<HourlyDTO>, IRepository<HourlyDTO> {}
 export class HourlyRepository implements IRepository<HourlyDTO> {
+
+
+
     
+    
+    async create(hourly: HourlyDTO): Promise<HourlyDTO> {
+        try {
+            const newHourly = await HourlyDAO.create(
+                {
+                    early_hours: hourly.early_hours,
+                    appointment_duration: hourly.appointment_duration,
+                    end_hours: hourly.end_hours
+
+                }
+            );
+            const result: HourlyDTO = {
+                early_hours: newHourly.early_hours,
+                end_hours: newHourly.end_hours,
+                appointment_duration: newHourly.appointment_duration
+              
+            };
+            
+            return result;
+        } catch (err) {          
+                console.log(err);
+                
+            throw err;
+        }
+    }
     /**
      * 
      * @param id 
