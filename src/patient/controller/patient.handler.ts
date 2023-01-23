@@ -91,7 +91,7 @@ export class PatientHandler {
      * @param next 
      */
     update = async(req: Request, res: Response, next: NextFunction) => {
-        const patientDto: PatientUserDTO = req.body;
+        const patientDto: PatientDTO = req.body;
 
         try {
             const result = await this.patientService.update(patientDto);
