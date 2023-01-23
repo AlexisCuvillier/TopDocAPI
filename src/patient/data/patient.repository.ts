@@ -96,7 +96,9 @@ export class PatientRepository implements IPatientRepository {
 
             await t.commit();
             return result;
-        } catch (err) {          
+        } catch (err) {   
+
+                   
             await t.rollback()
             throw err;
         }
