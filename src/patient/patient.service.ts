@@ -19,8 +19,18 @@ export class PatientService implements IPatientService{
      * 
      * @param patient 
      */
-    async update(patient: PatientDTO): Promise<PatientDTO> {
-       return this.patientRepository.update(patient);
+    async update(patient: PatientUserDTO): Promise<PatientDTO> {
+        let hashPass = await bcrypt.hash(patient.password, 10)
+        let patienInfo : PatientUserDTO = {
+            num_secu: patient.num_secu,
+            name: patient.name,
+            lastname: patient.lastname,
+            password: hashPass,
+            phone: patient.phone,
+            mail: patient.mail
+        }
+         return this.patientRepository.update(patienInfo);
+        
     }
 
     /**

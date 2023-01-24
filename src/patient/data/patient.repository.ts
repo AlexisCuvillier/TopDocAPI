@@ -14,7 +14,7 @@ export class PatientRepository implements IPatientRepository {
      * 
      * @param patient
      */
-    async update(patient: PatientDTO): Promise<PatientDTO> {
+    async update(patient: PatientUserDTO): Promise<PatientUserDTO> {
 
         if (patient.id_user === null) throw new InputError("No id for person or admin");
 
@@ -22,10 +22,102 @@ export class PatientRepository implements IPatientRepository {
 
         if (row === null) throw new NotFoundError("Person not found");
 
-        row.num_secu = patient.num_secu;
-        const result = await row.save()
-        return PatientMapper.mapToPatientDto(result);
-    }
+        // row.num_secu = patient.num_secu;
+        // const result = await row.save()
+        // return PatientMapper.mapToPatientDto(result);
+
+
+        // const userInfo = {
+        //     name: patient.name,
+        //     lastname: patient.lastname,
+        //     mail: patient.mail,
+        //     password: patient.password,
+        //     phone: patient.phone
+        // }
+
+        // const patientInfo = {
+        //     num_secu: patient.num_secu
+        // }
+
+        // const t = await sequelize.transaction();
+
+       
+        // try {
+        //    await TopDocUserDAO.update(
+        //         userInfo,
+        //         {
+        //             transaction: t,
+        //             where: {id_user: patient.id_user}
+        //         }
+        //     )
+
+        //   const update =  await PatientDAO.update(
+        //         patientInfo,
+        //         {
+        //             transaction: t,
+        //             where: {id_user:patient.id_user }
+        //         }
+        //     );
+
+        //     await t.commit();
+        //     return update;
+        // } catch (err) {   
+
+                   
+        //     await t.rollback()
+        //     throw err;
+        // }
+
+// ////////////////////////////////
+        // 
+        const t = await sequelize.transaction();
+
+       
+        try {
+            const newTopDocUser = await TopDocUserDAO.update(
+                {
+                    name: patient.name,
+                    lastname: patient.lastname,
+                    mail: patient.mail,
+                    password: patient.password,
+                    phone: patient.phone
+                },
+                {
+                    transaction: t,
+                    where: {id_user: patient.id_user }
+                }
+            );
+
+            const newPatient = await PatientDAO.update({
+             
+                num_secu: patient.num_secu
+            },
+                {
+                    transaction: t,
+                    where: {id_user:patient.id_user}
+                }
+            );
+
+            const result: PatientUserDTO = {
+               
+                name: newTopDocUser[0].toLocaleString(),
+                lastname: newTopDocUser[0].toLocaleString(),
+                mail: newTopDocUser[0].toLocaleString(),
+                password:newTopDocUser[0].toLocaleString(),
+                phone: newTopDocUser[0],
+                num_secu: newPatient[0]
+            }
+
+            await t.commit();
+            return result;
+        } catch (err) {   
+
+                   
+            await t.rollback()
+            throw err;
+        }
+    
+}
 
     /**
      * 
