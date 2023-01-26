@@ -3,8 +3,10 @@ import { PatientDAO } from '../../patient/data/patient.dao';
 import { AdministratorDAO } from '../../administrator/data/administrator.dao';
 import { HourlyDAO } from '../../hourly/data/hourly.dao';
 import { AvailabilityDAO } from '../../availability/data/availability.dao';
+import { PeriodDAO } from '../../period/data/period.dao';
 
 export const relations = () => {
+
     TopDocUserDAO.hasOne(PatientDAO, { foreignKey: 'id_user', onDelete: 'cascade', hooks: true})
     PatientDAO.hasOne(TopDocUserDAO, { foreignKey: 'id_user', onDelete: 'cascade', hooks: true})
     
@@ -13,4 +15,8 @@ export const relations = () => {
 
     HourlyDAO.belongsToMany(AvailabilityDAO, {through: 'HourlyAvailability', foreignKey: 'id_hourly',otherKey: 'id_days',onDelete: 'cascade', hooks: true, timestamps:false});
     AvailabilityDAO.belongsToMany(HourlyDAO, { foreignKey: 'id_days',otherKey:'id_hourly', through: 'HourlyAvailability',onDelete: 'cascade', hooks: true, timestamps:false });
+
+    HourlyDAO.belongsTo(PeriodDAO, {foreignKey: 'id_period', as:'Period', onDelete: 'cascade', hooks: true,})
+    PeriodDAO.hasMany(HourlyDAO, { foreignKey: 'id_period', as:'Hourly', onDelete: 'cascade', hooks: true,})
+
 }

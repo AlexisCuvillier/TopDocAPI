@@ -1,11 +1,33 @@
 import { NotFoundError, InputError } from '../../core/errors/errors';
-import { IRepository } from "../../core/repository.interface";
+import { IRepository, IRepositoryCreate } from '../../core/repository.interface';
 import { PeriodDTO } from '../dto/period.dto';
 import { PeriodDAO } from './period.dao';
 import { PeriodMapper } from '../dto/period.mapper';
 
+
+export interface IPeriodRepository extends IRepositoryCreate<PeriodDTO>, IRepository<PeriodDTO> {}
 export class PeriodRepository implements IRepository<PeriodDTO> {
     
+    async create(period: PeriodDTO): Promise<PeriodDTO> {
+        try {
+            const newPeriod = await PeriodDAO.create(
+                {
+                    start_date: period.start_date,
+                    end_date: period.end_date
+                }
+            );
+            const result: PeriodDTO = {
+                start_date: newPeriod.start_date,
+                end_date: newPeriod.end_date
+            };
+            
+            return result;
+        } catch (err) {          
+                console.log(err);
+                
+            throw err;
+        }
+    }
     /**
      * 
      * @param id 

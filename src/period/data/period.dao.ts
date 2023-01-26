@@ -4,7 +4,7 @@ import sequelize from '../../core/database/sequelize';
 
 
 export class PeriodDAO extends Model<InferAttributes<PeriodDAO>> implements Period {
-    id_period!: number;
+    id_period?: number;
     start_date!: Date;
     end_date!:Date
 }
@@ -13,7 +13,7 @@ PeriodDAO.init(
     {
         id_period: {
             type: DataTypes.INTEGER,
-            field: "id_days",
+            field: "id_period",
             autoIncrement: true,
             primaryKey: true
         },

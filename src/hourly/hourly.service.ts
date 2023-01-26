@@ -49,7 +49,7 @@ export class HourlyService implements IService<HourlyDTO> {
      * @param id 
      * @returns 
      */
-    async findById(id: number): Promise<HourlyDTO> {
+    async findById(id: number): Promise<HourlyDTO | null> {
         return this.hourlyRepository.findById(id);
     }
 }

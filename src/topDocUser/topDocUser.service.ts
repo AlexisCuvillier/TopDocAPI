@@ -41,10 +41,8 @@ export class TopDocUserService implements IService<TopDocUserDTO> {
      * @returns 
      */
     async findById(id: number): Promise<TopDocUserDTO> {
-        return this.topDocUserRepository.findById(id).then(topDocUserDto => {
-            topDocUserDto.name = "M. " + topDocUserDto.name; //INFO dans le service on implémente la logique métier(fut-elle basique comme ici)
-            return topDocUserDto;
-        });
+        return this.topDocUserRepository.findById(id)
+       
     }
 }
 

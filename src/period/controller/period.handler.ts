@@ -11,7 +11,24 @@ export class PeriodHandler {
     constructor(periodService: PeriodService) {
         this.periodService = periodService;
     }
+    /**
+     * 
+     * @param req 
+     * @param res 
+     * @returns 
+     */
+     create = async (req: Request, res: Response, next: NextFunction) => {
 
+        const periodDto: PeriodDTO = req.body;
+
+        try {
+            const result = await this.periodService.create(periodDto);
+            res.status(200).json(result);
+        } catch (err) {
+            next(err);
+        }
+
+    }
 
     /**
      * 

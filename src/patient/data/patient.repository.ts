@@ -14,17 +14,24 @@ export class PatientRepository implements IPatientRepository {
      * 
      * @param patient
      */
-    async update(patient: PatientUserDTO): Promise<PatientUserDTO> {
+    async update(patient: PatientUserDTO): Promise<PatientDTO> {
 
         if (patient.id_user === null) throw new InputError("No id for person or admin");
 
         const row = await PatientDAO.findByPk(patient.id_user);
-
         if (row === null) throw new NotFoundError("Person not found");
+        row.num_secu = patient.num_secu;
 
-        // row.num_secu = patient.num_secu;
-        // const result = await row.save()
-        // return PatientMapper.mapToPatientDto(result);
+        // const secRow = await TopDocUserDAO.findByPk(patient.id_user)
+        // secRow.name = patient.name,
+        // secRow.lastname = patient.lastname,
+        // secRow.mail = patient.mail,
+        // secRow.phone = patient.phone,
+        // secRow.password = patient.password
+        
+        const result = await row.save()
+     
+        return PatientMapper.mapToPatientDto(result);
 
 
         // const userInfo = {
@@ -46,6 +53,7 @@ export class PatientRepository implements IPatientRepository {
         //    await TopDocUserDAO.update(
         //         userInfo,
         //         {
+        //             returning:true,
         //             transaction: t,
         //             where: {id_user: patient.id_user}
         //         }
@@ -54,13 +62,13 @@ export class PatientRepository implements IPatientRepository {
         //   const update =  await PatientDAO.update(
         //         patientInfo,
         //         {
+        //             returning:true,
         //             transaction: t,
         //             where: {id_user:patient.id_user }
         //         }
         //     );
 
-        //     await t.commit();
-        //     return update;
+        //     return update
         // } catch (err) {   
 
                    
@@ -70,52 +78,53 @@ export class PatientRepository implements IPatientRepository {
 
 // ////////////////////////////////
         // 
-        const t = await sequelize.transaction();
+        // const t = await sequelize.transaction();
 
        
-        try {
-            const newTopDocUser = await TopDocUserDAO.update(
-                {
-                    name: patient.name,
-                    lastname: patient.lastname,
-                    mail: patient.mail,
-                    password: patient.password,
-                    phone: patient.phone
-                },
-                {
-                    transaction: t,
-                    where: {id_user: patient.id_user }
-                }
-            );
+        // try {
+        //     const newTopDocUser = await TopDocUserDAO.update(
+        //         {
+        //             name: patient.name,
+        //             lastname: patient.lastname,
+        //             mail: patient.mail,
+        //             password: patient.password,
+        //             phone: patient.phone
+        //         },
+        //         {
+        //             transaction: t,
+        //             where: {id_user: patient.id_user }
+        //         }
+        //     );
 
-            const newPatient = await PatientDAO.update({
+        //     const newPatient = await PatientDAO.update({
              
-                num_secu: patient.num_secu
-            },
-                {
-                    transaction: t,
-                    where: {id_user:patient.id_user}
-                }
-            );
+        //         num_secu: patient.num_secu
+        //     },
+        //         {
+        //             transaction: t,
+        //             where: {id_user:patient.id_user}
+        //         }
+        //     );
 
-            const result: PatientUserDTO = {
+        //     const result: PatientUserDTO = {
                
-                name: newTopDocUser[0].toLocaleString(),
-                lastname: newTopDocUser[0].toLocaleString(),
-                mail: newTopDocUser[0].toLocaleString(),
-                password:newTopDocUser[0].toLocaleString(),
-                phone: newTopDocUser[0],
-                num_secu: newPatient[0]
-            }
+        //         name: newTopDocUser[0].toLocaleString(),
+        //         lastname: newTopDocUser[0].toLocaleString(),
+        //         mail: newTopDocUser[0].toLocaleString(),
+        //         password:newTopDocUser[0].toLocaleString(),
+        //         phone: newTopDocUser[0],
+        //         num_secu: newPatient[0]
+        //     }
 
-            await t.commit();
-            return result;
-        } catch (err) {   
+        //     await t.commit();
+        //     return result;
+        // } catch (err) {   
 
+        //            console.log(err);
                    
-            await t.rollback()
-            throw err;
-        }
+        //     await t.rollback()
+        //     throw err;
+        // }
     
 }
 

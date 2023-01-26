@@ -1,15 +1,22 @@
 import { IRepository } from "../core/repository.interface";
-import { IService } from "../core/service.interface";
+import { IService, IServiceCreate } from '../core/service.interface';
 import { PeriodDTO } from "./dto/period.dto";
+import { IPatientRepository } from '../patient/data/patient.repository';
+import { IPeriodRepository } from './data/period.repository';
 
 
-
+export interface IPeriodService extends IService<PeriodDTO>, IServiceCreate<PeriodDTO> {}
 export class PeriodService implements IService<PeriodDTO> {
 
-    private periodRepository: IRepository<PeriodDTO>;
+    private periodRepository: IPeriodService;
 
-    constructor(_periodRepository: IRepository<PeriodDTO>) {
+    constructor(_periodRepository: IPeriodRepository) {
         this.periodRepository = _periodRepository;
+    }
+
+
+    async create(period: PeriodDTO): Promise<PeriodDTO> {
+        return this.periodRepository.create(period)
     }
 
     /**
@@ -42,7 +49,7 @@ export class PeriodService implements IService<PeriodDTO> {
      * @param id 
      * @returns 
      */
-    async findById(id: number): Promise<PeriodDTO> {
+    async findById(id: number): Promise<PeriodDTO | null> {
         return this.periodRepository.findById(id);
     }
 }

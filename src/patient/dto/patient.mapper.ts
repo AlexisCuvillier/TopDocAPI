@@ -12,8 +12,8 @@ export class PatientMapper {
         return dto;
     }
 
-    static mapToPatientUserDto(patient: PatientDAO, topDocUser: TopDocUserDAO): PatientUserDTO | null {
-        if(patient === null) return null;
+    static mapToPatientUserDto(patient: PatientDAO, topDocUser: TopDocUserDAO): PatientUserDTO {
+    
 
         const dto: PatientUserDTO = {
             id_user: topDocUser.id_user,

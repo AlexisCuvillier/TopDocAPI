@@ -19,7 +19,7 @@ export class PatientService implements IPatientService{
      * 
      * @param patient 
      */
-    async update(patient: PatientUserDTO): Promise<PatientDTO> {
+    async update(patient: PatientUserDTO): Promise<PatientUserDTO> {
         let hashPass = await bcrypt.hash(patient.password, 10)
         let patienInfo : PatientUserDTO = {
             num_secu: patient.num_secu,
@@ -29,7 +29,8 @@ export class PatientService implements IPatientService{
             phone: patient.phone,
             mail: patient.mail
         }
-         return this.patientRepository.update(patienInfo);
+         return this.update(patienInfo)
+
         
     }
 
